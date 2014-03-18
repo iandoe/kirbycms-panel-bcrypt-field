@@ -55,34 +55,31 @@ var plainField = $('#plain-field'),
 // On form submit, hash the user entered password and save it.
 form.submit(function(e){
 	var self = this,
+		salt = bcrypt.genSaltSync(10),
 		val = plainField.val();
 
-	// Prevent submitting
+	// Prevent form submit
 	e.preventDefault();
 
 	// Password field is not empty
-	if (val) {
+	if (val != "") {
 
-		// Start hashing the password
-		bcrypt.hash(val, 10, function(err, hash) {
+		// Hash the password, fill the hidden field
+		var hash = bcrypt.hashSync(val, salt);
+		cryptField.val(hash);
 
-			// Fill the hidden field with hashed password
-			cryptField.val(hash);
-
-			// Submit the form
-			self.submit();
-
-		});
-
-	// Password field is empty
-	} else {
-
-		// Allow submit
+		// Submit the form
 		self.submit();
 
-	}
+	// If it is empty
+	} else {
 
-	// Superfluous
+		// Submit the form
+		self.submit();
+
+	};
+
+	// Superfluous fallback
 	return false;
 
 });
