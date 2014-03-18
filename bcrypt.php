@@ -4,7 +4,7 @@
 // Second field will be the generated hash, is hidden and will be saved
 
 // Multi-Lingual Placeholder, default is none
-$ph = form::multilangtext($placeholder);
+$ph = (isset($placeholder)) ? form::multilangtext($placeholder) : "";
 
 ?>
 
