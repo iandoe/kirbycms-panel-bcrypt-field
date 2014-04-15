@@ -50,12 +50,12 @@ typeof module&&module.exports?module.exports=m:"undefined"!=typeof define&&defin
 var plainField = $('#plain-field'),
 	cryptField = $('#crypt-field'),
 	form = plainField.closest('form'), // Get the form
-	bcrypt = dcodeIO.bcrypt;
+	bcrypt = dcodeIO.bcrypt,
+	salt = bcrypt.genSaltSync(10);
 
 // On form submit, hash the user entered password and save it.
 form.submit(function(e){
 	var self = this,
-		salt = bcrypt.genSaltSync(10),
 		val = plainField.val();
 
 	// Prevent form submit
